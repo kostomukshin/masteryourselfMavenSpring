@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>10,000 hours - Master Yourself</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+</head>
+<body>
+	<h1>Add activity</h1>
+	<div>
+		<form th:object="${activity}" th:action="@{../save}" action="#" method="post">
+		
+		
+		<label for="activity">Activity<br></label>
+		<input type="text" id="activity" th:field="*{activity}" />
+		<div style="clear: both; display: block; height: 10px;"></div>
+		
+		<label for="hour">Amount of time<br></label>
+		<input type="text" id="hour" th:field="*{hour}" />
+		<div style="clear: both; display: block; height: 10px;"></div>
+		
+		<label for="date">Date<br></label>
+		<input placeholder = "dd.mm.yyyy" type="text" id="date" th:field="*{date}" />
+		<div style="clear: both; display: block; height: 10px;"></div>
+		
+		<label for="comment">Additional info<br></label>
+		<input type="text" id="comment" th:field="*{comment}" />
+		<div style="clear: both; display: block; height: 10px;"></div>
+		
+		<label for="catlist">Category<br></label>
+		<select id="catlist" th:field="*{category.categoryid}" class="form-control">
+		
+			<option
+					th:each="cat: ${categories}"
+					th:value="${cat.categoryid}"
+					th:text="${cat.name}"
+					></option>
+		</select>
+		
+		
+		<input type="submit" value="Save"></input>
+		</form>
+	</div>
+</body>
+</html>
+		

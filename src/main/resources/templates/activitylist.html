@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	
+	
+    <title>10,000 hours - Master Yourself</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    
+</head>
+<body>
+<div class="container">
+
+            <div class="row row-centered pos">
+                <div class="col-lg-8 col-centered">
+                    <div class="well"></div>
+                </div>
+                
+		<h3 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]!</h3>
+		<form th:action="@{/logout}" method="post">
+
+		<div>&nbsp; <input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/> &nbsp; </div>
+		</form>
+	
+			
+</div>
+	<h2>My Activities</h2>
+    <table class="table table-striped">
+    	<thead>
+		<tr>
+		    <th>Activity</th>
+		    <th>Amount of time</th>
+		    <th>Date</th>
+		    <th>Category</th>
+		    <th>Additional Info</th>
+		    <th sec:authorize="hasRole('ADMIN')"> </th>
+		    
+		  
+ 
+		<tbody>
+		<tr th:each = "activity: ${activities}">
+		<td th:text = "${activity.activity}"></td>
+		<td th:text = "${activity.hour}"></td>
+		<td th:text = "${activity.date}"></td>
+		<td th:text = "${activity.category.name}"></td>
+		<td th:text = "${activity.comment}"></td>
+		<td><a th:href="@{/edit/{id}(id=${activity.actid})}" class = "btn btn-warning">Edit</a></td>
+		<td><a th:href="@{/delete/{id}(id=${activity.actid})}" class="btn btn-danger">Delete</a></td>
+
+		
+ 		</tbody>
+     </table>
+	 <a href="/add" class="btn btn-success">Add Activity</a>    	
+	 
+	 
+</body>
+ 
+
+    <div>
+          Page [[${currentPage}]] of [[${totalPages}]] &nbsp;&nbsp;&nbsp;
+          
+          <a th:if="${currentPage >1}" th:href="@{/page/1}">First</a>
+         <span th:unless="${currentPage >1}">First</span>
+         
+         <a th:if="${currentPage >1}" th:href="@{'/page/' + ${currentPage - 1}}">Previous</a>
+         <span th:unless="${currentPage >1}">Previous</span>
+          
+          <span th:each="i: ${#numbers.sequence(1, totalPages)}">&nbsp;
+          <a th:if="${i !=currentPage}" th:href="@{'/page/' + ${i}}">[[${i}]]</a>
+          <span th:unless="${i != currentPage}">[[${i}]]</span>
+          </span>
+          
+         <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}}">Next</a>
+         <span th:unless="${currentPage < totalPages}">Next</span>
+         
+         <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}}">Last</a>
+         <span th:unless="${currentPage < totalPages}">Last</span>
+          
+    
+         
+    </div>
+</body>
+</html>
